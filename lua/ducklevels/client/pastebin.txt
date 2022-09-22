@@ -1,0 +1,142 @@
+				local DG_UpperStatsPanel = vgui.Create("DPagePanel", DG_StatsContents)
+				DG_UpperStatsPanel:SetSize(1, 1)
+				DG_UpperStatsPanel:Dock(FILL)
+				DG_UpperStatsPanel:SetSelectorSize(40)
+				DG_UpperStatsPanel:SetSelectorLRMargins((240 * ScrW()) / 1920)
+				DG_UpperStatsPanel.SelectorPanel.Paint = function (s, w, h) draw.RoundedBoxEx(8, 0, 0, w, h, DG_Colors["PanelColor"], false, false, true, true) end
+				DG_UpperStatsPanel.ContentPanel.Paint = function (s, w, h) draw.RoundedBoxEx(8, 0, 0, w, h, DG_Colors["PanelColor"], true, true, false, false) end
+				local DG_Page1 = DG_UpperStatsPanel:AddPage()
+				local DG_Page2 = DG_UpperStatsPanel:AddPage()
+				local DG_Page3 = DG_UpperStatsPanel:AddPage()
+				local DG_Page4 = DG_UpperStatsPanel:AddPage()
+				local DG_Page5 = DG_UpperStatsPanel:AddPage()
+				function DG_Page1:Paint(w, h) draw.SimpleText("1 reloaded", "DermaDefault", 10, 10, Color(0, 0, 0, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP) end
+				function DG_Page2:Paint(w, h) draw.SimpleText("2 beans", "DermaDefault", 10, 20, Color(0, 0, 0, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP) end
+				function DG_Page3:Paint(w, h) draw.SimpleText("3 :(", "DermaDefault", 10, 30, Color(0, 0, 0, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP) end
+				function DG_Page4:Paint(w, h) draw.SimpleText("42", "DermaDefault", 10, 40, Color(0, 0, 0, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP) end
+				function DG_Page5:Paint(w, h) draw.SimpleText("5 not so tasty", "DermaDefault", 10, 50, Color(0, 0, 0, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP) end
+
+
+
+							local DG_LPTop = vgui.Create("DPanel", DG_LeftPanel)
+			DG_LPTop:SetSize(1, DG_StatsFrame:GetTall() / 3.5)
+			DG_LPTop:Dock(TOP)
+			DG_LPTop.Paint = FloatingPanel
+
+				-- Panel that holds and draws the rank icon at the top left.
+				local DG_LPTRank = vgui.Create("DPanel", DG_LPTop)
+				DG_LPTRank:SetSize(DG_LeftPanel:GetWide() / 2.5, 150)
+				DG_LPTRank:Dock(LEFT)
+				DG_LPTRank:DockMargin(8, 8, 8, 8)
+				DG_LPTRank.Paint = FloatingPanel -- should be invisible?
+
+				-- Invisble panel located to the right of the rank icon.
+				local DG_LPTContents = vgui.Create("DPanel", DG_LPTop)
+				DG_LPTContents:SetSize(1, 1)
+				DG_LPTContents:Dock(FILL)
+				function DG_LPTContents:Paint(w, h)
+					draw.SimpleText(LocalPlayer():Name(), "Roboto20pt", 0, 8, DG_Colors["TextColor"], TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+					draw.SimpleText("Rank: " .. DuckLevels.Client.Stats["Rank"], "Roboto20pt", 0, (h / 7) + 8, DG_Colors["TextColor"], TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+					draw.SimpleText("Points: " .. DuckLevels.Client.Stats["PerformancePoints"], "Roboto20pt", 0, (h / 7) * 2 + 8, DG_Colors["TextColor"], TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+					draw.SimpleText("Karma: " .. LocalPlayer():GetBaseKarma(), "Roboto20pt", 0, (h / 7) * 3 + 8, DG_Colors["TextColor"], TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+				end
+
+			local DG_LPMiddle = vgui.Create("DPanel", DG_LeftPanel)
+			DG_LPMiddle:SetSize(15, 15)
+			DG_LPMiddle:Dock(FILL)
+			DG_LPMiddle:DockMargin(0, 8, 0, 0)
+			DG_LPMiddle.Paint = FloatingPanel
+
+				local DG_MyStatsButton = vgui.Create("DButton", DG_LPMiddle)
+				DG_MyStatsButton:SetSize(8, 8)
+				DG_MyStatsButton:Dock(TOP)
+				DG_MyStatsButton:DockMargin(8, 8, 8, 0)
+				DG_MyStatsButton:SetTall(DG_LeftPanel:GetWide() / 8)
+				DG_MyStatsButton:SetText("")
+				DG_MyStatsButton.DText = "My Stats"
+				DG_MyStatsButton.DFont = "Roboto20pt"
+				DG_MyStatsButton.Paint = ButtonPaint
+				function DG_MyStatsButton:DoClick()
+					HideAllPanels(DG_StatsFrame.DG_ContentPanels)
+					DG_StatsFrame.DG_ContentPanels["Stats"]:Show()
+				end
+
+				local DG_LeaderboardButton = vgui.Create("DButton", DG_LPMiddle)
+				DG_LeaderboardButton:SetSize(8, 8)
+				DG_LeaderboardButton:Dock(TOP)
+				DG_LeaderboardButton:DockMargin(8, 8, 8, 0)
+				DG_LeaderboardButton:SetTall(DG_LeftPanel:GetWide() / 8)
+				DG_LeaderboardButton:SetText("")
+				DG_LeaderboardButton.DText = "Leaderboard"
+				DG_LeaderboardButton.DFont = "Roboto20pt"
+				DG_LeaderboardButton.Paint = ButtonPaint
+				function DG_LeaderboardButton:DoClick()
+					HideAllPanels(DG_StatsFrame.DG_ContentPanels)
+					DG_StatsFrame.DG_ContentPanels["Leaderboard"]:Show()
+				end
+
+		local DG_RightPanel = vgui.Create("DPanel", DG_StatsFrame.DG_Contents)
+		DG_RightPanel:SetSize(30, 30)
+		DG_RightPanel:Dock(FILL)
+		DG_RightPanel:DockMargin(0, 8, 8, 8)
+		DG_RightPanel.Paint = NoPaint
+
+			local DG_StatsContents = vgui.Create("DPanel", DG_RightPanel)
+			DG_StatsContents:SetSize(1, 1)
+			DG_StatsContents:Dock(FILL)
+			DG_StatsContents.Paint = NoPaint
+
+				local DG_XPBarContents = vgui.Create("DPanel", DG_StatsContents)
+				DG_XPBarContents:SetSize(1, DG_StatsFrame:GetTall() / 5)
+				DG_XPBarContents:DockMargin(0, 8, 0, 0)
+				DG_XPBarContents:Dock(BOTTOM)
+				DG_XPBarContents.Paint = FloatingPanel
+
+
+			local DG_LeaderboardContents = vgui.Create("DPanel", DG_RightPanel)
+			DG_LeaderboardContents:SetSize(1, 1)
+			DG_LeaderboardContents:Dock(FILL)
+			DG_LeaderboardContents:Hide()
+			DG_LeaderboardContents.Paint = FloatingPanel
+
+
+
+
+
+
+			
+			local function create_stat_label(stat_name, value, list)
+				local label = vgui.Create("DPanel")
+				label:SetSize(DG_ContentsWidth / 3, DG_ContentsHeight / 6)
+				function label:Paint(w, h) 
+					draw.SimpleText(stat_name, "Duck30pt", w / 2, h / 3, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER) 
+					draw.SimpleText(value, "Duck30pt", w / 2, (h / 3) * 2, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				end
+				list:Add(label)
+				return label
+			end
+
+			local function empty_label(list)
+				for _ = 1, 2 do
+					local label = vgui.Create("DPanel")
+					label.Paint = NoPaint
+					label:SetSize(DG_ContentsWidth / 2, DG_ContentsHeight / 8)
+					list:Add(label)
+				end
+			end
+
+			local DG_MainStats = DG_StatsContents:AddPage(vgui.Create("DIconLayout"))
+			DG_MainStats:InvalidateParent(true)
+				empty_label(DG_MainStats)
+				create_stat_label("Rounds Played", DuckLevels.Client.Stats["RoundsPlayed"], DG_MainStats)
+				create_stat_label("Rounds Won", DuckLevels.Client.Stats["RoundsWon"], DG_MainStats)
+				create_stat_label("Rounds Lost", DuckLevels.Client.Stats["RoundsPlayed"] - DuckLevels.Client.Stats["RoundsWon"], DG_MainStats)
+				create_stat_label("Kills", DuckLevels.Client.Stats["Kills"], DG_MainStats)
+				create_stat_label("Deaths", DuckLevels.Client.Stats["Deaths"], DG_MainStats)
+				create_stat_label("Suicides", DuckLevels.Client.Stats["Suicides"], DG_MainStats)
+				create_stat_label("Headshots", DuckLevels.Client.Stats["Headshots"], DG_MainStats)
+				create_stat_label("Jumps", DuckLevels.Client.Stats["Jumps"], DG_MainStats)
+
+
+				-- need this one too with everything else
+				local DG_ContentsWidth, DG_ContentsHeight = DG_PointshopContents:GetSize()
