@@ -45,40 +45,40 @@ DuckLevels.Client.Stats["Favorite Weapons"] = {} -- some weird table idfk
 
 DG_BoxRoundedness = 5
 DG_WhiteColors = {
-	MenuBackground = Color(255, 255, 255, 255),
-	Background = Color(245, 245, 245, 255),
-	TextColor = Color(16, 16, 16, 255),
+	MenuBackground = Color(255, 255, 255),
+	Background = Color(245, 245, 245),
+	TextColor = Color(16, 16, 16),
 	ButtonColor = Color(0, 0, 0, 50),
 	ButtonDownColor = Color(0, 0, 0, 80),
-	InventoryHighlight = Color(80, 80, 255, 255),
-	ShopHighlight = Color(170, 70, 255, 255),
-	StatsHighlight = Color(255, 160, 100, 255),
-	LeaderboardHighlight = Color(130, 190, 130, 255),
-	SettingsHighlight = Color(0, 0, 0, 255),
-	Highlight = Color(80, 80, 255, 255), -- pls no chang, it (should) be the same as the inventory highlight.
-	TabColor = Color(150, 150, 150, 255),
-	TabHighlight = Color(110, 110, 250, 255),
-	TabClickColor = Color(0, 0, 0, 255),
+	InventoryHighlight = Color(140, 140, 255),
+	ShopHighlight = Color(187, 130, 236),
+	StatsHighlight = Color(255, 160, 100),
+	LeaderboardHighlight = Color(130, 190, 130),
+	SettingsHighlight = Color(0, 0, 0),
+	Highlight = Color(140, 140, 255), -- pls no chang, it (should) be the same as the inventory highlight.
+	TabColor = Color(150, 150, 150),
+	TabHighlight = Color(110, 110, 250),
+	TabClickColor = Color(0, 0, 0),
 	PanelColor = Color(0, 0, 0, 30),
 	PanelHigh = Color(255, 255, 255, 120),
 	PanelSuperHigh = Color(255, 255, 255, 180)
 }
 
 DG_DarkColors = {
-	MenuBackground = Color(75, 75, 75, 255),
-	Background = Color(64, 64, 64, 255),
-	TextColor = Color(245, 245, 245, 255),
+	MenuBackground = Color(75, 75, 75),
+	Background = Color(64, 64, 64),
+	TextColor = Color(245, 245, 245),
 	ButtonColor = Color(255, 255, 255, 50),
 	ButtonDownColor = Color(255, 255, 255, 80),
-	InventoryHighlight = Color(100, 100, 255, 255),
-	ShopHighlight = Color(170, 70, 255, 255),
-	StatsHighlight = Color(255, 160, 100, 255),
-	LeaderboardHighlight = Color(130, 250, 130, 255),
-	SettingsHighlight = Color(255, 255, 255, 255),
-	Highlight = Color(80, 80, 255, 255), -- pls no chang, it (should) be the same as the inventory highlight.
-	TabColor = Color(170, 170, 170, 255),
-	TabHighlight = Color(110, 110, 250, 255),
-	TabClickColor = Color(0, 0, 0, 255),
+	InventoryHighlight = Color(100, 100, 255),
+	ShopHighlight = Color(170, 70, 255),
+	StatsHighlight = Color(255, 160, 100),
+	LeaderboardHighlight = Color(130, 250, 130),
+	SettingsHighlight = Color(255, 255, 255),
+	Highlight = Color(80, 80, 255), -- pls no chang, it (should) be the same as the inventory highlight.
+	TabColor = Color(170, 170, 170),
+	TabHighlight = Color(110, 110, 250),
+	TabClickColor = Color(0, 0, 0),
 	PanelColor = Color(255, 255, 255, 10),
 	PanelHigh = Color(255, 255, 255, 40),
 	PanelSuperHigh = Color(255, 255, 255, 50)
@@ -318,6 +318,7 @@ function ConstructStatsPanel()
 		DG_PointshopContents.Paint = FloatingPanel
 		DG_PointshopContents:InvalidateParent(true)
 		DG_PointshopContents:Hide()
+
 
 		local DG_StatsContents = vgui.Create("DPagePanel", DG_Frame.DG_Contents)
 		DG_StatsContents:SetSize(DG_Frame.DG_Contents:GetWide(), DG_Frame.DG_Contents:GetTall())
