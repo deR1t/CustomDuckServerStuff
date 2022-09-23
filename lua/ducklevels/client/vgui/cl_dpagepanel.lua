@@ -2,6 +2,8 @@
 -- and yet here i am, just to suffer
 
 -- also this code is jank.
+-- probably need to seriously give this a rewrite later since it was my first custom element
+-- i didnt use a lot of the nice built in functions that i could've overridden :D
 
 local PANEL = {}
 PANEL.SelectorSize = 100
@@ -59,14 +61,14 @@ function PANEL:Build()
 
 	-- Button time START
 
-	local function ButtonPaint( self, w, h )
-		if self:IsDown() then
-			self.CurColor = DG_Colors["ButtonDownColor"]
+	local function ButtonPaint( s, w, h )
+		if s:IsDown() then
+			s.CurColor = DG_Colors["ButtonDownColor"]
 		else
-			self.CurColor = DG_Colors["ButtonColor"]
+			s.CurColor = DG_Colors["ButtonColor"]
 		end
-		draw.RoundedBox(4, 0, 0, w, h, self.CurColor)
-		draw.SimpleText(self:GetText(), self:GetFont(), w / 2, h / 2, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.RoundedBox(4, 0, 0, w, h, s.CurColor)
+		draw.SimpleText(s:GetText(), s:GetFont(), w / 2, h / 2, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	margin = vgui.Create("DPanel", self.SelectorPanel)
@@ -165,7 +167,7 @@ function PANEL:ChangePage(pagenum)
 end
 
 function PANEL:Init()
-	if (#self.ContentPanelList ~= 0) then 
+	if (#self.ContentPanelList ~= 0) then
 		for i, v in ipairs(self.ContentPanelList) do
 			v:Remove()
 		end
@@ -185,7 +187,7 @@ function PANEL:Remove()
 	if (self.ContentPanel ~= nil) then
 		self.ContentPanel:Remove()
 	end
-	if (#self.ContentPanelList ~= 0) then 
+	if (#self.ContentPanelList ~= 0) then
 		for i, v in ipairs(self.ContentPanelList) do
 			v:Remove()
 		end

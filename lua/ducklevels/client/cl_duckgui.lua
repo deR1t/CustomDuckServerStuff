@@ -31,14 +31,7 @@ DuckLevels.Client.Stats["Credits Used"] = 13
 DuckLevels.Client.Stats["RDMs"] = 536
 DuckLevels.Client.Stats["Karma Lost"] = 4160
 
-
 DuckLevels.Client.Stats["Favorite Weapons"] = {} -- some weird table idfk
-
-
-
-
-
-
 
 -----------
 -- GUI STUFF DOWN HERE!!!
@@ -170,7 +163,7 @@ function ConstructStatsPanel()
 	DG_Frame:Hide()
 	DG_Frame.DG_Contents:InvalidateParent(true)
 	print(DG_Frame:GetWide() .. "  " .. DG_Frame.DG_Contents:GetWide())
-	
+
 	local DG_FrameHighlight = vgui.Create("DPanel", DG_Frame)
 	DG_FrameHighlight:Dock(TOP)
 	DG_FrameHighlight:SetTall(2)
@@ -189,7 +182,7 @@ function ConstructStatsPanel()
 
 		QuickDivider(DG_Frame.DG_MenuBar, 0, 10)
 
-		
+
 		local DG_InventoryButton = vgui.Create("DButton", DG_Frame.DG_MenuBar)
 		DG_InventoryButton:SetSize(8, 8)
 		DG_InventoryButton:Dock(LEFT)
@@ -282,13 +275,17 @@ function ConstructStatsPanel()
 					local Margins = LabelHeight - IconSize
 					local TextStat = vgui.Create("DPanel", DG_PlayerPanel)
 					local SmallFix = (4 / 1080) * ScrH()
+
+					local TextString = stat .. " " .. label
+					local TextX = Margins * 2 + IconSize
+					local TextY = (LabelHeight / 2) + SmallFix
 					TextStat:Dock(TOP)
 					TextStat:SetTall(IconSize * 1.5)
 					function TextStat:Paint(w, h)
 						surface.SetMaterial(pic)
 						surface.SetDrawColor(DG_Colors["TextColor"])
 						surface.DrawTexturedRect(Margins, Margins, IconSize, IconSize)
-						draw.SimpleText(stat .. " " .. label, "Duck20pt", Margins * 2 + IconSize, (LabelHeight / 2) + SmallFix, DG_Colors["TextColor"], TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+						draw.SimpleText(TextString, "Duck20pt", TextX, TextY, DG_Colors["TextColor"], TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 					end
 				end
 
@@ -298,7 +295,7 @@ function ConstructStatsPanel()
 			local DG_PlayerView = vgui.Create("DModelPanel", DG_LeftPanel)
 			DG_PlayerView:Dock( FILL )
 			DG_PlayerView:SetModel("models/breen.mdl")
-			DG_PlayerView:SetFOV(40)	
+			DG_PlayerView:SetFOV(40)
 			DG_PlayerView:SetCursor("arrow")
 			DG_PlayerView:GetEntity():SetAngles(Angle(0, 75, 0))
 			DG_PlayerView.LayoutEntity = function(ent) return end
@@ -337,12 +334,14 @@ function ConstructStatsPanel()
 				statpanel:Dock(TOP)
 				statpanel:DockMargin(8, 8, 8, 0)
 				statpanel:SetTall(DG_PointshopContents:GetTall() / 6)
+
+				local StatName = DuckLevels.Client.Stats[name]
 				function statpanel.Paint(s, w, h)
 					draw.RoundedBoxEx(DG_BoxRoundedness, 0, 0, w, h / 2, DG_Colors["PanelSuperHigh"], true, true, false, false)
 					draw.RoundedBoxEx(DG_BoxRoundedness, 0, h / 2, w, h / 2, DG_Colors["PanelHigh"], false, false, true, true)
 					draw.SimpleText(name, "Duck35pt", w / 2, h / 4, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 					if (statoverride == nil) then
-						draw.SimpleText(DuckLevels.Client.Stats[name], "Duck30pt", w / 2, (h / 4) * 3, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+						draw.SimpleText(StatName, "Duck30pt", w / 2, (h / 4) * 3, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 					else
 						draw.SimpleText(statoverride(), "Duck30pt", w / 2, (h / 4) * 3, DG_Colors["TextColor"], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 					end
@@ -352,11 +351,11 @@ function ConstructStatsPanel()
 			local DG_StatsPage1 = DG_StatsContents:AddPageQuick()
 				local DG_Left1 = vgui.Create("DPanel", DG_StatsPage1)
 				DG_Left1:Dock(LEFT)
-				DG_Left1:SetDrawBackground(false)
+				DG_Left1:SetPaintBackground(false)
 				DG_Left1:SetWide(DG_PointshopContents:GetWide() / 2)
 				local DG_Right1 = vgui.Create("DPanel", DG_StatsPage1)
 				DG_Right1:Dock(FILL)
-				DG_Right1:SetDrawBackground(false)
+				DG_Right1:SetPaintBackground(false)
 				DG_Right1:SetWide(DG_PointshopContents:GetWide() / 2)
 
 				AddStat("Rounds Played", DG_Left1)
@@ -413,15 +412,15 @@ function LegacyPanelConstruct()
 	DG_Sheet:Dock(FILL)
 
 	local DG_InventoryContents = vgui.Create("DPanel", DG_Sheet)
-	DG_InventoryContents:SetDrawBackground(false)
+	DG_InventoryContents:SetPaintBackground(false)
 	DG_Sheet:AddSheet("Inventory", DG_InventoryContents)
 
 	local DG_PointshopContents = vgui.Create("DPanel", DG_Sheet)
-	DG_PointshopContents:SetDrawBackground(false)
+	DG_PointshopContents:SetPaintBackground(false)
 	DG_Sheet:AddSheet("Pointshop", DG_PointshopContents)
 
 	local DG_StatContents = vgui.Create("DPanel", DG_Sheet)
-	DG_StatContents:SetDrawBackground(false)
+	DG_StatContents:SetPaintBackground(false)
 	DG_Sheet:AddSheet("Stats", DG_StatContents)
 
 
