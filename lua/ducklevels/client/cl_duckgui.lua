@@ -33,6 +33,22 @@ DuckLevels.Client.Stats["Karma Lost"] = 4160
 
 DuckLevels.Client.Stats["Favorite Weapons"] = {} -- some weird table idfk
 
+------------
+-- fontz
+
+function DuckyCreateFonts()
+	surface.CreateFont("DuckLabel", { font = "Roboto", size = 15 * (ScrH() / 1080) })
+	surface.CreateFont("Duck20pt", { font = "Roboto", size = 20 * (ScrH() / 1080) })
+	surface.CreateFont("Duck25pt", { font = "Roboto", size = 25 * (ScrH() / 1080) })
+	surface.CreateFont("DuckBold25pt", { font = "Roboto", size = 25 * (ScrH() / 1080), weight = 600 })
+	surface.CreateFont("Duck30pt", { font = "Roboto", size = 30 * (ScrH() / 1080) })
+	surface.CreateFont("Duck35pt", { font = "Roboto", size = 35 * (ScrH() / 1080) })
+	surface.CreateFont("Duck45pt", { font = "Roboto", size = 45 * (ScrH() / 1080) })
+end
+
+hook.Add( "OnScreenSizeChanged", "DuckyFontHook", DuckyCreateFonts)
+DuckyCreateFonts()
+
 -----------
 -- GUI STUFF DOWN HERE!!!
 
@@ -307,6 +323,21 @@ function ConstructStatsPanel()
 		DG_InventoryContents:DockMargin(8, 8, 8, 8)
 		DG_InventoryContents.Paint = FloatingPanel
 		DG_InventoryContents:InvalidateParent(true)
+
+		local sw = {"Big", "Small", "Silly", "Cool", "Ugly", "Serious", "Extreme", "Calm"}
+		local ew = {"Top Hat", "Hat", "Weapon", "Shirt", "Pants", "Accessory"}
+
+		for x = 0, 5 do
+			for y = 0, 5 do
+				local testthing = vgui.Create("DuckyInventorySlot", DG_InventoryContents)
+				testthing:SetIconSize((96 / 1080) * ScrH())
+				if (math.random(1, 4) == 1) then
+					testthing:SetItemName(sw[math.random(1, #sw)] .. " " .. ew[math.random(1, #ew)])
+				end
+				testthing:SetPos((testthing.Size + 4) * x + 4, (testthing.Size + 4) * y + 4)
+				testthing:MakeThisAnInventoryItem()
+			end
+		end
 
 		local DG_PointshopContents = vgui.Create("DPanel", DG_Frame.DG_Contents)
 		DG_PointshopContents:SetSize(64, 64)
