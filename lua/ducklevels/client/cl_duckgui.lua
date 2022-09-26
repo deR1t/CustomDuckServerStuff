@@ -134,7 +134,7 @@ function DuckyCreatePrettyDFrame(window_title)
 	end
 
 		DG_Frame.DG_MenuBar = vgui.Create("DPanel", DG_Frame)
-		DG_Frame.DG_MenuBar:SetSize(DG_Frame:GetWide(), 30)
+		DG_Frame.DG_MenuBar:SetSize(DG_Frame:GetWide(), (30 / 1080) * ScrH())
 		DG_Frame.DG_MenuBar:Dock(TOP)
 		DG_Frame.DG_MenuBar.Paint = NoPaint
 
@@ -326,6 +326,7 @@ function ConstructStatsPanel()
 
 		local sw = {"Big", "Small", "Silly", "Cool", "Ugly", "Serious", "Extreme", "Calm"}
 		local ew = {"Top Hat", "Hat", "Weapon", "Shirt", "Pants", "Accessory"}
+		local coolmdl = {"models/mossman.mdl", "models/alyx.mdl", "models/Kleiner.mdl", "models/props_c17/oildrum001.mdl", "models/weapons/w_pist_deagle.mdl", "models/weapons/w_c4.mdl"}
 
 		for x = 0, 5 do
 			for y = 0, 5 do
@@ -333,6 +334,7 @@ function ConstructStatsPanel()
 				testthing:SetIconSize((96 / 1080) * ScrH())
 				if (math.random(1, 4) == 1) then
 					testthing:SetItemName(sw[math.random(1, #sw)] .. " " .. ew[math.random(1, #ew)])
+					testthing:SetItemModel(coolmdl[math.random(1, #coolmdl)])
 				end
 				testthing:SetPos((testthing.Size + 4) * x + 4, (testthing.Size + 4) * y + 4)
 				testthing:MakeThisAnInventoryItem()

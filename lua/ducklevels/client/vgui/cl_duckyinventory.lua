@@ -2,6 +2,14 @@
 --[[
 	SetIconSize(size)	- sets the width and height of the inventory item.
 	SetItem(item)		- uses a duck item table to set everything automagically
+
+	item documention :)
+	{
+		"name" - display name
+		"icon" - material to display
+		"modelpath" - model to display
+	}
+
 ]]
 
 local PANEL = {}
@@ -29,7 +37,8 @@ function PANEL:Init()
 	self.Item["name"] = nil
 	self.Item["icon"] = nil
 	self.Item["modelpath"] = nil
-	self.Item["fallbackcolor"] = self.RandomColors[math.random(1, #self.RandomColors)] -- this doesn't need to exist on the server or get sent to clients...
+	self.Item["modelent"] = nil
+	self.Item["fallbackcolor"] = self.RandomColors[math.random(1, #self.RandomColors)]
 	self:Rebuild()
 end
 
@@ -42,11 +51,24 @@ function PANEL:Paint(w, h)
 	if (self.Item["name"] == nil) then
 		-- we have no item in this slot so we draw the empty slot
 		draw.RoundedBox(4, 0, 0, w, h, self.EmptyBGColor)
-	else
-		draw.RoundedBox(4, 0, 0, w, h, self.Item["fallbackcolor"])
-		draw.RoundedBoxEx(4, 0, (h / 5) * 4, w, h / 5, self.LabelBGColor, false, false, true, true)
-		draw.SimpleText(self.Item["name"], "DuckLabel", w / 2, ((h / 5) * 4) + (h / 10), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		return
 	end
+	draw.RoundedBox(4, 0, 0, w, h, self.Item["fallbackcolor"]) -- draw the bg color box
+
+	if (self.Item["icon"] ~= nil) then
+		-- draw pretty icon
+	end
+
+	if (self.Item["modelpath"] ~= nil) then
+		-- draw pretty model
+		local x, y = self:LocalToScreen(0, 0)
+		cam.Start3D(Vector(0, 0, 0), Angle(0, 0, 0), 60, x, y, w, h, 1, 1000)
+		self.Item["modelent"]:DrawModel()
+		cam.End3D()
+	end
+
+	draw.RoundedBoxEx(4, 0, (h / 5) * 4, w, h / 5, self.LabelBGColor, false, false, true, true)
+	draw.SimpleText(self.Item["name"], "DuckLabel", w / 2, ((h / 5) * 4) + (h / 10), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
 
@@ -60,6 +82,12 @@ end
 
 function PANEL:SetItemModel(modelpath)
 	self.Item["modelpath"] = modelpath
+	self.Item["modelent"] = ClientsideModel(modelpath)
+	local head = self.Item["modelent"]:LookupBone("ValveBiped.Bip01_Head1")
+	if (head) then
+		local headpos, _ = self.Item["modelent"]:GetBonePosition(head)
+		self.Item["modelent"]:SetPos(Vector(60, 0, -headpos.z))
+	end
 end
 
 function PANEL:SetItem(newitem)
