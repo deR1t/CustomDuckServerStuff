@@ -128,13 +128,15 @@ function DuckyCreatePrettyDFrame(window_title)
 	local DG_Frame = vgui.Create("DPanel")
 	DG_Frame.DG_ContentPanels = {}
 
+	local bar_height = (30 / 1080) * ScrH()
+
 	function DG_Frame:Paint(w, h)
 		draw.RoundedBox(DG_BoxRoundedness, 0, 0, w, h, DG_Colors["MenuBackground"])
-		draw.RoundedBoxEx(DG_BoxRoundedness, 0, 30, w, h - 30, DG_Colors["Background"], false, false, true, true)
+		draw.RoundedBoxEx(DG_BoxRoundedness, 0, bar_height, w, h - bar_height, DG_Colors["Background"], false, false, true, true)
 	end
 
 		DG_Frame.DG_MenuBar = vgui.Create("DPanel", DG_Frame)
-		DG_Frame.DG_MenuBar:SetSize(DG_Frame:GetWide(), (30 / 1080) * ScrH())
+		DG_Frame.DG_MenuBar:SetSize(DG_Frame:GetWide(), bar_height)
 		DG_Frame.DG_MenuBar:Dock(TOP)
 		DG_Frame.DG_MenuBar.Paint = NoPaint
 
@@ -147,7 +149,7 @@ function DuckyCreatePrettyDFrame(window_title)
 			DG_TitleLabel:SizeToContents()
 
 			local DG_CloseButton = vgui.Create("DButton", DG_Frame.DG_MenuBar)
-			DG_CloseButton:SetSize(30, 30)
+			DG_CloseButton:SetSize(bar_height, bar_height)
 			DG_CloseButton:Dock(RIGHT)
 			DG_CloseButton:SetText("")
 			function DG_CloseButton:Paint(w, h)
