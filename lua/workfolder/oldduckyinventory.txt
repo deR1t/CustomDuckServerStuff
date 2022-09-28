@@ -72,9 +72,9 @@ function PANEL:Paint(w, h)
 	if (self.Item["modelpath"] ~= nil) then
 		-- draw pretty model
 		local x, y = self:LocalToScreen(0, 0)
-		--cam.Start3D(Vector(0, 0, 0), Angle(20, -180, 0), 60, x, y, w, h, 1, 1000)
-		--self.Item["modelent"]:DrawModel()
-		--cam.End3D()
+		cam.Start3D(Vector(0, 0, 0), Angle(20, -180, 0), 60, x, y, w, h, 1, 1000)
+		self.Item["modelent"]:DrawModel()
+		cam.End3D()
 	end
 
 	draw.RoundedBoxEx(4, 0, (h / 5) * 4, w, h / 5, self.LabelBGColor, false, false, true, true)
@@ -96,8 +96,6 @@ function PANEL:SetItemModel(modelpath)
 	self.Item["modelent"] = ClientsideModel(modelpath, RENDERGROUP_OTHER)
 	self.Item["modelent"]:SetNoDraw(true)
 	self.Item["modelent"]:SetLOD(0)
-
-	self:SetSpawnIcon("")
 
 	local head = DuckFindEntHead(self.Item["modelent"])
 	print(modelpath, head)
